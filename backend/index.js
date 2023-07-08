@@ -426,5 +426,5 @@ app.get('/ordered',authenticate,async(req,res)=>{
 
 app.listen(process.env.PORT,()=>{
     connection()
-    console.log("listening at port 3001")
+    console.log("listening at port 8080")
 })
