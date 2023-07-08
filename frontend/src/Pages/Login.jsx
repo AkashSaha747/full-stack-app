@@ -1,10 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Container, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
 import React, { useContext, useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { Appcontext } from '../ContextProvider/AppcontextProvider';
 import { extendTheme } from "@chakra-ui/react"
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
@@ -37,7 +37,7 @@ const Login = () => {
     setsignobj({ ...signobj, [e.target.name]: e.target.value })
   }
   let doLogin=async()=>{
-    let res=await axios.post("http://localhost:3001/login",loginobj);
+    let res=await axios.post("http://localhost:8080/login",loginobj);
     console.log(res);
     if(res.data.msg.includes("success")){
       alert(res.data.msg)
@@ -52,30 +52,36 @@ const Login = () => {
         }
   let doSignup = async () => {
     console.log(signobj)
-    let res = await axios.post('http://localhost:3001/signup', signobj);
+    let res = await axios.post('http://localhost:8080/signup', signobj);
     console.log(res.data);
+    if(res.data.msg.includes("success")){
+      alert("done sign up")
+    }
+    else{
+alert(res.data.msg)
+    }
   }
 
   return (
-    <Container>
+    <Container >
       <Flex m={'40px auto'} justifyContent={'space-around'} >
-        <Button onClick={() => { setstate("signup") }}
-          colorScheme='green' size='lg'
+        <Button variant='outline' onClick={() => { setstate("signup") }}
+          colorScheme={state=="login"?"black":"green"} size='lg'
         >Signup</Button>
-        <Button onClick={() => { setstate("login") }}
-          colorScheme='green' size='lg'
+        <Button variant='outline' onClick={() => { setstate("login") }}
+          colorScheme={state=="signup"?"black":"green"} size='lg'
         >Login</Button>
       </Flex>
       {
         state == "login" && <>
-          <Box boxShadow={'0 0 10px black'} p={'15px 15px'} m={'50px auto'} border={'none'} borderRadius={'10px'}>
-            <FormControl>
-              <FormLabel mt={'15px'} fontSize={'xl'} color={'rgb(8,65,92)'}>Email</FormLabel>
+          <Box boxShadow={'0 0 10px black'} p={'20px 20px'} m={'50px auto'} border={'none'} borderRadius={'15px 0 15px 0'}>
+            <FormControl textAlign={"center"}>
+              <FormLabel fontFamily={"Brush Script MT"} color={'rgb(8,65,92)'} mt={'10px'} fontSize={'xl'} >Email</FormLabel>
               <Input type='email' name='email' onChange={handleLogin} size='lg' />
-              <FormLabel mt={'15px'} fontSize={'xl'} color={'rgb(8,65,92)'}>Password</FormLabel>
+              <FormLabel mt={'10px'} fontFamily={"Brush Script MT"}  fontSize={'xl'} color={'rgb(8,65,92)'}>Password</FormLabel>
               <Input type='password' name='password' onChange={handleLogin} size='lg' />
               <Button onClick={() => { doLogin() }}
-                colorScheme="yellow" color={'white'} size='lg' my={'10px'} alignSelf={'center'}>Login</Button>
+                colorScheme="teal" m={"auto"} color={'white'} size='lg' my={'10px'} alignSelf={'center'}>Login</Button>
             </FormControl>
           </Box>
 
@@ -83,16 +89,16 @@ const Login = () => {
       }
       {
         state == "signup" && <>
-          <Box boxShadow={'0 0 10px black'} p={'15px 15px'} m={'50px auto'} border={'none'} borderRadius={'10px'}>
-            <FormControl >
-              <FormLabel mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Name</FormLabel>
+          <Box boxShadow={'0 0 10px black'} p={'20px 20px'} m={'50px auto'} border={'none'} borderRadius={'15px 0 15px 0'}>
+            <FormControl textAlign={"center"}>
+              <FormLabel fontFamily={"Brush Script MT"} mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Name</FormLabel>
               <Input type='text' name='name' onChange={handleSignup} size='lg' />
-              <FormLabel mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Email</FormLabel>
+              <FormLabel fontFamily={"Brush Script MT"} mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Email</FormLabel>
               <Input type='email' name='email' onChange={handleSignup} mt={'15px'} size='lg' />
-              <FormLabel mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Password</FormLabel>
+              <FormLabel fontFamily={"Brush Script MT"} mt={'15px'} fontSize={'xl'} color={'rgb(14,36,8)'}>Password</FormLabel>
               <Input type='password' name='password' onChange={handleSignup} size='lg' />
               <Button onClick={() => { doSignup() }}
-                colorScheme="yellow" color={'white'} size='lg' m={'10px auto'}>Signup</Button>
+                colorScheme="teal" color={'white'} size='lg' m={'10px auto'}>Signup</Button>
             </FormControl>
           </Box>
         </>
