@@ -114,7 +114,7 @@
 
 
 
-import { Box, Center, Flex, Heading,Badge, Spacer,Text,InputGroup,Input,InputRightElement,Button } from '@chakra-ui/react'
+import { Box, Center, Flex, Heading,Badge, Spacer,useToast,Text,InputGroup,Input,InputRightElement,Button } from '@chakra-ui/react'
 import { AiOutlineSearch } from 'react-icons/ai';
 import { MdOutlineAccountCircle } from 'react-icons/md';
 import { BsCart2 } from 'react-icons/bs';
@@ -127,7 +127,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
-
+let toast=useToast();
   let navigate=useNavigate();
   // let navigate = useNavigate();
     // const { loginWithRedirect, isauth , logout, user } = useAuth0();
@@ -146,7 +146,7 @@ const Navbar = () => {
     setuser({name : x});
     getcartdata();
   }
- },[isauth])
+ },[isauth,co,cart])
 
  let getcartdata=async()=>{
   let token = localStorage.getItem("token");
@@ -272,6 +272,13 @@ const Navbar = () => {
     isauth ? 
       <button onClick={() =>
       {
+        setco(0);
+        toast({
+  title: 'Logged out.',
+  status: 'warning',
+  duration: 2000,
+  isClosable: true,
+})
     setisauth(false)
     localStorage.clear();
        }

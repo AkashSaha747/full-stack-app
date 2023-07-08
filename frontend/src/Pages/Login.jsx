@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Container, Flex, FormControl, FormLabel, Input } from '@chakra-ui/react'
+import { Box, Button, Container, Flex, FormControl, FormLabel, Input,useToast } from '@chakra-ui/react'
 import React, { useContext, useState } from 'react'
 import { motion, AnimatePresence } from "framer-motion";
 import { Appcontext } from '../ContextProvider/AppcontextProvider';
@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 const Login = () => {
-
+let toast=useToast();
   let [state, setstate] = useState("login");
   let { cart, setCart, isauth, setisauth, user, setuser } = useContext(Appcontext);
   let navigate = useNavigate();
@@ -40,8 +40,12 @@ const Login = () => {
     let res=await axios.post("http://localhost:8080/login",loginobj);
     console.log(res);
     if(res.data.msg.includes("success")){
-      alert(res.data.msg)
-    
+toast({
+  title: 'Login success.',
+  status: 'success',
+  duration: 2000,
+  isClosable: true,
+})
       localStorage.setItem("token",res.data.token)
       localStorage.setItem("userName",res.data.userName)
       setisauth(true);
@@ -53,9 +57,13 @@ const Login = () => {
   let doSignup = async () => {
     console.log(signobj)
     let res = await axios.post('http://localhost:8080/signup', signobj);
-    console.log(res.data);
     if(res.data.msg.includes("success")){
-      alert("done sign up")
+      toast({
+        title: 'Signup success.',
+        status: 'success',
+        duration: 2000,
+        isClosable: true,
+      })
     }
     else{
 alert(res.data.msg)
