@@ -65,10 +65,10 @@ alert(res.data.msg)
   return (
     <Container >
       <Flex m={'40px auto'} justifyContent={'space-around'} >
-        <Button variant='outline' onClick={() => { setstate("signup") }}
+        <Button variant='outline' background={state=="signup"?"blue":"white"} color={state=="signup"?"white":"black"} onClick={() => { setstate("signup") }}
           colorScheme={state=="login"?"black":"green"} size='lg'
         >Signup</Button>
-        <Button variant='outline' onClick={() => { setstate("login") }}
+        <Button variant='outline'  background={state=="login"?"blue":"white"} color={state=="login"?"white":"black"} onClick={() => { setstate("login") }}
           colorScheme={state=="signup"?"black":"green"} size='lg'
         >Login</Button>
       </Flex>
